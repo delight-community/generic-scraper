@@ -1,0 +1,27 @@
+{
+  "name": "generic-scraper",
+  "version": "1.0.0",
+  "description": "Scrape generic websites for producs",
+  "main": "genericscraper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/delight-community/generic-scraper.git"
+  },
+  "keywords": [
+    "awesome",
+    "cool",
+    "rox"
+  ],
+  "author": "DanGiaime",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/delight-community/generic-scraper/issues"
+  },
+  "homepage": "https://github.com/delight-community/generic-scraper#readme",
+  "dependencies": {
+    "puppeteer": "^5.5.0"
+  }
+}
