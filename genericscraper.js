@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 
-let getAllProductData = async (productPageURL) => {
+let getAllProductData = async (productPageURL, selectorConfig) => {
 
     // get puppeteer started
     const browser = await puppeteer.launch();
@@ -10,10 +10,10 @@ let getAllProductData = async (productPageURL) => {
     await page.goto(productPageURL);
 
     // grab all product urls off the page
-    let pages = await page.evaluate(() => {
+    let pages = await page.evaluate((selectorConfig) => {
         // Main page of website that holds all product links
-        return Array.from(document.querySelectorAll('a.product-item-link'), x => x.href).filter(url => url);
-    });
+        return Array.from(document.querySelectorAll(selectorConfig.productListLinkSelector), x => x.href).filter(url => url);
+    }, selectorConfig);
 
     let productData = [];
 
@@ -21,16 +21,16 @@ let getAllProductData = async (productPageURL) => {
     for(pageURL of pages) {
         await page.goto(pageURL);
         console.log(`Checking: ${pageURL}`);
-        let productDetails = await page.evaluate(() => {
+        let productDetails = await page.evaluate((selectorConfig) => {
             // Grab all data from the product page that we want in our database
-            let description = document?.querySelector('#maincontent > div.columns.container > div > div.product-info-main > div.product.attribute.sku > div')?.textContent;
-            let image = document?.querySelector('.fotorama__active > img')?.src;
-            let price = document?.querySelector('meta[itemprop="price"]')?.content;
-            let name = document?.querySelector('#maincontent > div.columns.container > div > div.product-info-main > div.product-info-price > div.page-title-wrapper.product > div > h2 > span')?.textContent;
+            let description = document?.querySelector(selectorConfig.description)?.textContent;
+            let image = document?.querySelector(selectorConfig.image)?.src;
+            let price = document?.querySelector(selectorConfig.price)?.content || document?.querySelector(selectorConfig.price)?.textContent;
+            let name = document?.querySelector(selectorConfig.name)?.textContent;
             return {
                 description, image, price, name
             };
-        });
+        }, selectorConfig);
         console.log(`Checked: ${pageURL}`);
         productData.push(productDetails); 
     }
@@ -41,7 +41,25 @@ let getAllProductData = async (productPageURL) => {
 
 }
 
-let productPageURL= "https://www.citysoles.com/women.html?product_list_limit=all";
+let productPageURLCitySoles = "https://www.citysoles.com/women.html?product_list_limit=all";
+
+let selectorConfigCitySoles = {
+    productListLinkSelector: "a.product-item-link",
+    name: "#maincontent > div.columns.container > div > div.product-info-main > div.product-info-price > div.page-title-wrapper.product > div > h2 > span",
+    price: 'meta[itemprop="price"]',
+    description: "#maincontent > div.columns.container > div > div.product-info-main > div.product.attribute.sku > div",
+    image: ".fotorama__active > img",
+};
+
+let productPageURLFirefly = "https://www.fireflyfiberarts.com/yarn";
+
+let selectorConfigFirefly = {
+    productListLinkSelector: "a.product",
+    name: "h1.product-title",
+    price: ".sqs-money-native",
+    description: "#productDetails > div.product-excerpt > p:nth-child(1)",
+    image: "img.loaded",
+};
 
 // if this doesn't work yell at Totally, mosa
-getAllProductData(productPageURL).then(console.log);
+getAllProductData(productPageURLFirefly, selectorConfigFirefly).then(console.log);

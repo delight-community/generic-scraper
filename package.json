@@ -4,7 +4,8 @@
   "description": "Scrape generic websites for producs",
   "main": "genericscraper.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./genericscaper.js"
   },
   "repository": {
     "type": "git",
