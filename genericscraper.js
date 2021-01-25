@@ -41,9 +41,9 @@ let getAllProductData = async (productPageURL, selectorConfig) => {
 
 }
 
-let productPageURLCitySoles = "https://www.citysoles.com/women.html?product_list_limit=all";
+const productPageURLCitySoles = "https://www.citysoles.com/women.html?product_list_limit=all";
 
-let selectorConfigCitySoles = {
+const selectorConfigCitySoles = {
     productListLinkSelector: "a.product-item-link",
     name: "#maincontent > div.columns.container > div > div.product-info-main > div.product-info-price > div.page-title-wrapper.product > div > h2 > span",
     price: 'meta[itemprop="price"]',
@@ -51,9 +51,9 @@ let selectorConfigCitySoles = {
     image: ".fotorama__active > img",
 };
 
-let productPageURLFirefly = "https://www.fireflyfiberarts.com/yarn";
+const productPageURLFirefly = "https://www.fireflyfiberarts.com/yarn";
 
-let selectorConfigFirefly = {
+const selectorConfigFirefly = {
     productListLinkSelector: "a.product",
     name: "h1.product-title",
     price: ".sqs-money-native",
@@ -61,5 +61,14 @@ let selectorConfigFirefly = {
     image: "img.loaded",
 };
 
+const productPageURLRareDragons = "https://www.raredragons.shop/store/c24/Mugs%2C_Bags_%26_Blankets.html";
+const selectorConfigRareDragons = {
+    productListLinkSelector: ".wsite-com-category-product-link",
+    name: "#wsite-com-product-title",
+    price: ".wsite-com-product-price-amount",
+    description: "#wsite-com-product-short-description > div",
+    image: ".wsite-com-product-images-main-image",
+};
+
 // if this doesn't work yell at Totally, mosa
-getAllProductData(productPageURLFirefly, selectorConfigFirefly).then(console.log);
+getAllProductData(productPageURLRareDragons, selectorConfigRareDragons).then(console.log);
